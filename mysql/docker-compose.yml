@@ -1,0 +1,22 @@
+version: '3.10'
+
+services:
+  mysql:
+    build: .
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: password  
+      MYSQL_DATABASE: test_database       
+      MYSQL_USER: user            
+      MYSQL_PASSWORD: test_password     
+    ports:
+      - "3316:3306"
+    networks:
+      - kafka-net
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+networks:
+  kafka-net:
+    external: true
+    driver: bridge                
